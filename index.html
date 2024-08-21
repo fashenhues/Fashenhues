@@ -31,6 +31,7 @@
         }
     </style>
     <script>
+        // Password protection
         const correctPassword = "YourSecretPassword";  // Replace with your actual password
 
         // Check if the user is already logged in
@@ -41,6 +42,61 @@
             } else {
                 document.body.innerHTML = "Access Denied";
             }
+        }
+
+        function calculate() {
+            const baseWeight = parseFloat(document.getElementById('base-weight').value);
+            const formula = document.getElementById('formula').value;
+
+            if (isNaN(baseWeight) || baseWeight <= 0) {
+                alert("Please enter a valid weight.");
+                return;
+            }
+
+            let ratios = {};
+            switch (formula) {
+                case "S01":
+                    ratios = {"Red Oxide": 1.0000, "Black": 0.3858, "Yellow Oxide": 0.2142};
+                    break;
+                case "S02":
+                    ratios = {"White": 1.0000, "Red Oxide": 0.0484, "Black": 0.0494, "Yellow Oxide": 0.0184};
+                    break;
+                case "S03":
+                    ratios = {"White": 1.0000, "Black": 0.8333, "Yellow Oxide": 0.6666, "New Green": 0.2000};
+                    break;
+                case "S04":
+                    ratios = {"New Green": 1.0000};
+                    break;
+                case "S05":
+                    ratios = {"Blue": 1.0000, "Magenta": 0.3555, "New Red": 0.0473};
+                    break;
+                case "S06":
+                    ratios = {"Yellow Oxide": 1.0000, "Red Oxide": 0.1923, "Black": 0.1385};
+                    break;
+                case "S07":
+                    ratios = {"White": 1.0000, "Blue": 0.0375, "Black": 0.0354};
+                    break;
+                case "S08":
+                    ratios = {"New Green": 1.0000, "Yellow Oxide": 1.0000};
+                    break;
+                case "S09":
+                    ratios = {"White": 1.0000, "Black": 0.0500};
+                    break;
+                case "S10":
+                    ratios = {"White": 1.0000};
+                    break;
+                default:
+                    alert("Unknown formula selected.");
+                    return;
+            }
+
+            let resultText = `<strong>For ${baseWeight}g of the primary base color:</strong><br>`;
+            for (const color in ratios) {
+                const amount = (baseWeight * ratios[color]).toFixed(4);
+                resultText += `${color}: ${amount}g<br>`;
+            }
+
+            document.getElementById('result').innerHTML = resultText;
         }
     </script>
 </head>
@@ -53,7 +109,15 @@
     <label for="formula">Select Formula:</label>
     <select id="formula">
         <option value="S01">S-01 Indian Flesh</option>
-        <!-- Add more formulas here if needed -->
+        <option value="S02">S-02 Mocha</option>
+        <option value="S03">S-03 Cabbage Green</option>
+        <option value="S04">S-04 Jade</option>
+        <option value="S05">S-05 Blue Violet</option>
+        <option value="S06">S-06 Caramel</option>
+        <option value="S07">S-07 Blue Gray</option>
+        <option value="S08">S-08 Mint Green</option>
+        <option value="S09">S-09 Gray</option>
+        <option value="S10">S-10 White</option>
     </select>
 
     <button onclick="calculate()">Calculate</button>
@@ -61,35 +125,5 @@
     <div class="result" id="result">
         <!-- Calculated weights will be displayed here -->
     </div>
-
-    <script>
-        function calculate() {
-            const baseWeight = parseFloat(document.getElementById('base-weight').value);
-            const formula = document.getElementById('formula').value;
-
-            if (isNaN(baseWeight) || baseWeight <= 0) {
-                alert("Please enter a valid weight.");
-                return;
-            }
-
-            let ratios;
-            if (formula === "S01") {
-                // Ratios for S-01 Indian Flesh
-                ratios = {
-                    "Black": 0.3858,
-                    "Yellow Oxide": 0.2142
-                };
-            }
-            // Add more formulas and their ratios here if needed
-
-            let resultText = `<strong>For ${baseWeight}g of the primary base color:</strong><br>`;
-            for (const color in ratios) {
-                const amount = (baseWeight * ratios[color]).toFixed(2);
-                resultText += `${color}: ${amount}g<br>`;
-            }
-
-            document.getElementById('result').innerHTML = resultText;
-        }
-    </script>
 </body>
 </html>
