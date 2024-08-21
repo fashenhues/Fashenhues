@@ -56,59 +56,21 @@
 </head>
 <body>
     <div class="calculator">
-        <h1>Paint Ratio Calculator 1.4</h1>
+        <h1>Paint Ratio Calculator 1.5</h1>
 
-        <label for="formula">Select Color Formula:</label>
+        <label for="product-line">Select Product Line:</label>
+        <select id="product-line" onchange="updateColors()">
+            <option value="" disabled selected>Select a product line</option>
+            <option value="14K Metallics">14K Metallics</option>
+            <option value="Sterling Metallics">Sterling Metallics</option>
+            <option value="Luminescents">Luminescents</option>
+            <option value="Pearlescents">Pearlescents</option>
+        </select>
+
+        <label for="formula">Select Color:</label>
         <select id="formula" onchange="updateRequiredColors()">
-            <option value="" disabled selected>Select a Color</option>
-            <option value="S01">S-01 Indian Flesh</option>
-            <option value="S02">S-02 Mocha</option>
-            <option value="S03">S-03 Cabbage Green</option>
-            <option value="S04">S-04 Jade</option>
-            <option value="S05">S-05 Blue Violet</option>
-            <option value="S06">S-06 Caramel</option>
-            <option value="S07">S-07 Blue Gray</option>
-            <option value="S08">S-08 Mint Green</option>
-            <option value="S09">S-09 Gray</option>
-            <option value="S10">S-10 White</option>
-            <option value="S11">S-11 Yellow</option>
-            <option value="S12">S-12 Orange</option>
-            <option value="S13">S-13 Flesh</option>
-            <option value="S14">S-14 Green</option>
-            <option value="S15">S-15 Red</option>
-            <option value="S16">S-16 Purple</option>
-            <option value="S17">S-17 Black</option>
-            <option value="S18">S-18 Brown</option>
-            <option value="S19">S-19 Blue</option>
-            <option value="S20">S-20 Red Brown</option>
-            <option value="S21">S-21 Mustard</option>
-            <option value="S22">S-22 Magenta</option>
-            <option value="S23">S-23 Mediterranean</option>
-            <option value="S24">S-24 Maroon</option>
-            <option value="S25">S-25 Periwinkle</option>
-            <option value="S26">S-26 Lime</option>
-            <option value="S27">S-27 Turquoise</option>
-            <option value="S28">S-28 Black Brown</option>
-            <option value="S29">S-29 Pumpkin</option>
-            <option value="S30">S-30 Burgundy</option>
-            <option value="S31">S-31 Fuchsia</option>
-            <option value="S32">S-32 Royal Purple</option>
-            <option value="S33">S-33 Charcoal</option>
-            <option value="S34">S-34 Teal</option>
-            <option value="S35">S-35 Cocoa</option>
-            <option value="S36">S-36 Navy</option>
-            <option value="S37">S-37 Hunter Green</option>
-            <option value="S38">S-38 Rose</option>
-            <option value="S39">S-39 Golden Yellow</option>
-            <option value="S40">S-40 Sage</option>
-            <option value="S41">S-41 Sunset</option>
-            <option value="S42">S-42 Morning Glory</option>
-            <option value="S43">S-43 Canary Yellow</option>
-            <option value="S44">S-44 Denim</option>
-            <option value="S45">S-45 Harvest Moon</option>
-            <option value="S46">S-46 Violet Mist</option>
-            <option value="S47">S-47 Black Currant</option>
-            <option value="S48">S-48 Cayenne Pepper</option>
+            <option value="" disabled selected>Select a color</option>
+            <!-- Options will be populated dynamically -->
         </select>
 
         <div id="required-colors" class="required-colors">
@@ -126,377 +88,71 @@
     </div>
 
     <script>
+        const formulas = {
+            "14K Metallics": {
+                "K-01 14K Gold": {"ME200 Pale Gold": 1, "ME150 Silver": 0},
+                "K-02 Emerald": {"ME200 Pale Gold": 1, "New Green BAC": 0.0496},
+                // Add all 14K Metallics formulas here
+            },
+            "Sterling Metallics": {
+                "H-01 Sterling Silver": {"ME150 Silver": 1},
+                "H-02 Blueberry Ice": {"ME150 Silver": 1, "Blue BAC": 0.0441},
+                // Add all Sterling Metallics formulas here
+            },
+            "Luminescents": {
+                "L-01 Poinsettia Red": {"ME513 Sashay Red": 1},
+                "L-02 Holly Green": {"ME706 Green Apple": 2, "ME796 Emerald": 1},
+                // Add all Luminescents formulas here
+            },
+            "Pearlescents": {
+                "P-01 White Pearl": {"ME196 Pearl White": 1},
+                "P-02 Gold Pearl": {"ME164 Flash Gold": 1},
+                // Add all Pearlescents formulas here
+            }
+        };
+
+        function updateColors() {
+            const productLine = document.getElementById('product-line').value;
+            const formulaSelect = document.getElementById('formula');
+
+            // Clear previous options
+            formulaSelect.innerHTML = '<option value="" disabled selected>Select a color</option>';
+
+            if (productLine && formulas[productLine]) {
+                for (const color in formulas[productLine]) {
+                    const option = document.createElement('option');
+                    option.value = color;
+                    option.textContent = color;
+                    formulaSelect.appendChild(option);
+                }
+            }
+        }
+
         function updateRequiredColors() {
+            const productLine = document.getElementById('product-line').value;
             const formula = document.getElementById('formula').value;
             let requiredColors = [];
 
-            switch (formula) {
-                case "S01":
-                    requiredColors = ["Red Oxide", "Black", "Yellow Oxide"];
-                    break;
-                case "S02":
-                    requiredColors = ["White", "Red Oxide", "Black", "Yellow Oxide"];
-                    break;
-                case "S03":
-                    requiredColors = ["White", "Black", "Yellow Oxide", "New Green"];
-                    break;
-                case "S04":
-                    requiredColors = ["New Green"];
-                    break;
-                case "S05":
-                    requiredColors = ["Blue", "Magenta", "New Red"];
-                    break;
-                case "S06":
-                    requiredColors = ["Yellow Oxide", "Red Oxide", "Black"];
-                    break;
-                case "S07":
-                    requiredColors = ["White", "Blue", "Black"];
-                    break;
-                case "S08":
-                    requiredColors = ["New Green", "Yellow Oxide"];
-                    break;
-                case "S09":
-                    requiredColors = ["White", "Black"];
-                    break;
-                case "S10":
-                    requiredColors = ["White"];
-                    break;
-                case "S11":
-                    requiredColors = ["Yellow"];
-                    break;
-                case "S12":
-                    requiredColors = ["Yellow", "New Red"];
-                    break;
-                case "S13":
-                    requiredColors = ["White", "Yellow Oxide", "Red Oxide"];
-                    break;
-                case "S14":
-                    requiredColors = ["Yellow", "Blue", "Black"];
-                    break;
-                case "S15":
-                    requiredColors = ["New Red"];
-                    break;
-                case "S16":
-                    requiredColors = ["Magenta", "Blue", "New Red"];
-                    break;
-                case "S17":
-                    requiredColors = ["Black"];
-                    break;
-                case "S18":
-                    requiredColors = ["Red Oxide", "Black", "Yellow Oxide"];
-                    break;
-                case "S19":
-                    requiredColors = ["Blue"];
-                    break;
-                case "S20":
-                    requiredColors = ["Red Oxide"];
-                    break;
-                case "S21":
-                    requiredColors = ["Yellow Oxide"];
-                    break;
-                case "S22":
-                    requiredColors = ["Magenta"];
-                    break;
-                case "S23":
-                    requiredColors = ["Raw Umber (CCA)"];
-                    break;
-                case "S24":
-                    requiredColors = ["New Red", "Black"];
-                    break;
-                case "S25":
-                    requiredColors = ["White", "Blue", "Magenta", "Raw Umber (CCA)"];
-                    break;
-                case "S26":
-                    requiredColors = ["Yellow", "New Green"];
-                    break;
-                case "S27":
-                    requiredColors = ["White", "Blue", "New Green", "Yellow"];
-                    break;
-                case "S28":
-                    requiredColors = ["Black", "Red Oxide", "Yellow Oxide"];
-                    break;
-                case "S29":
-                    requiredColors = ["Yellow", "Red Oxide"];
-                    break;
-                case "S30":
-                    requiredColors = ["Magenta", "Red Oxide", "Black", "Yellow Oxide"];
-                    break;
-                case "S31":
-                    requiredColors = ["Magenta", "Blue", "New Red"];
-                    break;
-                case "S32":
-                    requiredColors = ["Magenta", "Blue", "Black", "New Red"];
-                    break;
-                case "S33":
-                    requiredColors = ["White", "Black"];
-                    break;
-                case "S34":
-                    requiredColors = ["New Green", "Blue"];
-                    break;
-                case "S35":
-                    requiredColors = ["White", "Red Oxide", "Black", "Yellow Oxide"];
-                    break;
-                case "S36":
-                    requiredColors = ["Blue", "Black"];
-                    break;
-                case "S37":
-                    requiredColors = ["Yellow", "Blue", "Black"];
-                    break;
-                case "S38":
-                    requiredColors = ["White", "Magenta", "Red Oxide"];
-                    break;
-                case "S39":
-                    requiredColors = ["Yellow", "Yellow Oxide"];
-                    break;
-                case "S40":
-                    requiredColors = ["Yellow", "Black"];
-                    break;
-                case "S41":
-                    requiredColors = ["White", "Red Oxide", "Yellow Oxide"];
-                    break;
-                case "S42":
-                    requiredColors = ["White", "Blue", "Magenta", "New Red"];
-                    break;
-                case "S43":
-                    requiredColors = ["White", "Yellow"];
-                    break;
-                case "S44":
-                    requiredColors = ["White", "Blue", "Black"];
-                    break;
-                case "S45":
-                    requiredColors = ["Orange", "New Red", "Red Oxide", "Yellow Oxide"];
-                    break;
-                case "S46":
-                    requiredColors = ["White", "Magenta", "Blue", "New Red"];
-                    break;
-                case "S47":
-                    requiredColors = ["New Red", "Magenta", "Black"];
-                    break;
-                case "S48":
-                    requiredColors = ["New Red", "Magenta", "Black"];
-                    break;
-                default:
-                    requiredColors = ["Unknown"];
-                    break;
+            if (productLine && formula && formulas[productLine] && formulas[productLine][formula]) {
+                requiredColors = Object.keys(formulas[productLine][formula]);
             }
 
             document.getElementById('required-colors').innerHTML =
-                `<strong>Required Colors for ${formula}:</strong><br> ${requiredColors.join(', ')}`;
+                `<strong>Required Colors for ${formula}:</strong> ${requiredColors.join(', ')}`;
         }
 
         function calculate() {
-            const baseWeight = parseFloat(document.getElementById('base-weight').value);
+            const productLine = document.getElementById('product-line').value;
             const formula = document.getElementById('formula').value;
+            const baseWeight = parseFloat(document.getElementById('base-weight').value);
 
             if (isNaN(baseWeight) || baseWeight <= 0) {
                 alert("Please enter a valid weight.");
                 return;
             }
 
-            let ratios = {};
-            let baseColor = "";
-
-            switch (formula) {
-                case "S01":
-                    baseColor = "Red Oxide";
-                    ratios = {"Black": 0.3858, "Yellow Oxide": 0.2142};
-                    break;
-                case "S02":
-                    baseColor = "White";
-                    ratios = {"Red Oxide": 0.0484, "Black": 0.0494, "Yellow Oxide": 0.0184};
-                    break;
-                case "S03":
-                    baseColor = "White";
-                    ratios = {"Black": 0.8333, "Yellow Oxide": 0.6666, "New Green": 0.2000};
-                    break;
-                case "S04":
-                    baseColor = "New Green";
-                    ratios = {};
-                    break;
-                case "S05":
-                    baseColor = "Blue";
-                    ratios = {"Magenta": 0.3555, "New Red": 0.0473};
-                    break;
-                case "S06":
-                    baseColor = "Yellow Oxide";
-                    ratios = {"Red Oxide": 0.1923, "Black": 0.1385};
-                    break;
-                case "S07":
-                    baseColor = "White";
-                    ratios = {"Blue": 0.0375, "Black": 0.0354};
-                    break;
-                case "S08":
-                    baseColor = "New Green";
-                    ratios = {"Yellow Oxide": 1.0000};
-                    break;
-                case "S09":
-                    baseColor = "White";
-                    ratios = {"Black": 0.0500};
-                    break;
-                case "S10":
-                    baseColor = "White";
-                    ratios = {};
-                    break;
-                case "S11":
-                    baseColor = "Yellow";
-                    ratios = {};
-                    break;
-                case "S12":
-                    baseColor = "Yellow";
-                    ratios = {"New Red": 0.5000};
-                    break;
-                case "S13":
-                    baseColor = "White";
-                    ratios = {"Yellow Oxide": 0.2325, "Red Oxide": 0.0132};
-                    break;
-                case "S14":
-                    baseColor = "Yellow";
-                    ratios = {"Blue": 0.6271, "Black": 0.0429};
-                    break;
-                case "S15":
-                    baseColor = "New Red";
-                    ratios = {};
-                    break;
-                case "S16":
-                    baseColor = "Magenta";
-                    ratios = {"Blue": 0.8400, "New Red": 0.1333};
-                    break;
-                case "S17":
-                    baseColor = "Black";
-                    ratios = {};
-                    break;
-                case "S18":
-                    baseColor = "Red Oxide";
-                    ratios = {"Black": 0.6844, "Yellow Oxide": 0.3800};
-                    break;
-                case "S19":
-                    baseColor = "Blue";
-                    ratios = {};
-                    break;
-                case "S20":
-                    baseColor = "Red Oxide";
-                    ratios = {};
-                    break;
-                case "S21":
-                    baseColor = "Yellow Oxide";
-                    ratios = {};
-                    break;
-                case "S22":
-                    baseColor = "Magenta";
-                    ratios = {};
-                    break;
-                case "S23":
-                    baseColor = "Raw Umber (CCA)";
-                    ratios = {};
-                    break;
-                case "S24":
-                    baseColor = "New Red";
-                    ratios = {"Black": 0.0316};
-                    break;
-                case "S25":
-                    baseColor = "White";
-                    ratios = {"Blue": 0.6250, "Magenta": 0.6250, "Raw Umber (CCA)": 0.2083};
-                    break;
-                case "S26":
-                    baseColor = "Yellow";
-                    ratios = {"New Green": 0.0454};
-                    break;
-                case "S27":
-                    baseColor = "White";
-                    ratios = {"Blue": 0.3226, "New Green": 0.2581, "Yellow": 0.0323};
-                    break;
-                case "S28":
-                    baseColor = "Black";
-                    ratios = {"Red Oxide": 0.5825, "Yellow Oxide": 0.2214};
-                    break;
-                case "S29":
-                    baseColor = "Yellow";
-                    ratios = {"Red Oxide": 0.1337};
-                    break;
-                case "S30":
-                    baseColor = "Magenta";
-                    ratios = {"Red Oxide": 0.2139, "Black": 0.1464, "Yellow Oxide": 0.0813};
-                    break;
-                case "S31":
-                    baseColor = "Magenta";
-                    ratios = {"Blue": 0.1475, "New Red": 0.0234};
-                    break;
-                case "S32":
-                    baseColor = "Magenta";
-                    ratios = {"Blue": 0.8400, "Black": 0.4055, "New Red": 0.1333};
-                    break;
-                case "S33":
-                    baseColor = "White";
-                    ratios = {"Black": 0.3900};
-                    break;
-                case "S34":
-                    baseColor = "New Green";
-                    ratios = {"Blue": 0.6300};
-                    break;
-                case "S35":
-                    baseColor = "White";
-                    ratios = {"Red Oxide": 0.1938, "Black": 0.1326, "Yellow Oxide": 0.0736};
-                    break;
-                case "S36":
-                    baseColor = "Blue";
-                    ratios = {"Black": 0.2500};
-                    break;
-                case "S37":
-                    baseColor = "Yellow";
-                    ratios = {"Blue": 0.6000, "Black": 0.2200};
-                    break;
-                case "S38":
-                    baseColor = "White";
-                    ratios = {"Magenta": 0.3738, "Red Oxide": 0.0654};
-                    break;
-                case "S39":
-                    baseColor = "Yellow";
-                    ratios = {"Yellow Oxide": 1.0000};
-                    break;
-                case "S40":
-                    baseColor = "Yellow";
-                    ratios = {"Black": 0.2000};
-                    break;
-                case "S41":
-                    baseColor = "White";
-                    ratios = {"Red Oxide": 0.3000, "Yellow Oxide": 0.2519};
-                    break;
-                case "S42":
-                    baseColor = "White";
-                    ratios = {"Blue": 0.0352, "Magenta": 0.0017, "New Red": 0.0002};
-                    break;
-                case "S43":
-                    baseColor = "White";
-                    ratios = {"Yellow": 0.5000};
-                    break;
-                case "S44":
-                    baseColor = "White";
-                    ratios = {"Blue": 0.1666, "Black": 0.1666};
-                    break;
-                case "S45":
-                    baseColor = "Orange";
-                    ratios = {"New Red": 0.1167, "Red Oxide": 0.0583, "Yellow Oxide": 0.0417};
-                    break;
-                case "S46":
-                    baseColor = "White";
-                    ratios = {"Magenta": 0.0084, "Blue": 0.0070, "New Red": 0.0011};
-                    break;
-                case "S47":
-                    baseColor = "New Red";
-                    ratios = {"Magenta": 1.0000, "Black": 0.3125};
-                    break;
-                case "S48":
-                    baseColor = "New Red";
-                    ratios = {"Magenta": 1.0000, "Black": 0.0220};
-                    break;
-                default:
-                    baseColor = "Unknown";
-                    ratios = {};
-                    break;
-            }
-
-            let resultText = `<strong>For ${baseWeight}g of ${baseColor}:</strong><br>`;
-            resultText += `${baseColor}: ${baseWeight.toFixed(1)}g<br>`;
+            let resultText = `<strong>For ${baseWeight}g of ${formula}:</strong><br>`;
+            const ratios = formulas[productLine][formula];
             for (const color in ratios) {
                 const amount = (baseWeight * ratios[color]).toFixed(1);
                 resultText += `${color}: ${amount}g<br>`;
