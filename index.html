@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paint Ratio Calculator</title>
+    <title>Protected Paint Ratio Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,9 +30,21 @@
             border-left: 5px solid #007bff;
         }
     </style>
+    <script>
+        const correctPassword = "YourSecretPassword";  // Replace with your actual password
+
+        // Check if the user is already logged in
+        if (!localStorage.getItem("loggedIn")) {
+            let enteredPassword = prompt("Enter Password:");
+            if (enteredPassword === correctPassword) {
+                localStorage.setItem("loggedIn", true);
+            } else {
+                document.body.innerHTML = "Access Denied";
+            }
+        }
+    </script>
 </head>
 <body>
-
     <h1>Paint Ratio Calculator</h1>
 
     <label for="base-weight">Enter Primary Base Color Weight (g):</label>
@@ -79,6 +91,5 @@
             document.getElementById('result').innerHTML = resultText;
         }
     </script>
-
 </body>
 </html>
