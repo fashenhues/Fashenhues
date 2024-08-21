@@ -54,43 +54,103 @@
             }
 
             let ratios = {};
+            let baseColor = "";
             switch (formula) {
                 case "S01":
-                    ratios = {"Red Oxide": 1.0000, "Black": 0.3858, "Yellow Oxide": 0.2142};
+                    baseColor = "Red Oxide";
+                    ratios = {"Black": 0.3858, "Yellow Oxide": 0.2142};
                     break;
                 case "S02":
-                    ratios = {"White": 1.0000, "Red Oxide": 0.0484, "Black": 0.0494, "Yellow Oxide": 0.0184};
+                    baseColor = "White";
+                    ratios = {"Red Oxide": 0.0484, "Black": 0.0494, "Yellow Oxide": 0.0184};
                     break;
                 case "S03":
-                    ratios = {"White": 1.0000, "Black": 0.8333, "Yellow Oxide": 0.6666, "New Green": 0.2000};
+                    baseColor = "White";
+                    ratios = {"Black": 0.8333, "Yellow Oxide": 0.6666, "New Green": 0.2000};
                     break;
                 case "S04":
-                    ratios = {"New Green": 1.0000};
+                    baseColor = "New Green";
+                    ratios = {};
                     break;
                 case "S05":
-                    ratios = {"Blue": 1.0000, "Magenta": 0.3555, "New Red": 0.0473};
+                    baseColor = "Blue";
+                    ratios = {"Magenta": 0.3555, "New Red": 0.0473};
                     break;
                 case "S06":
-                    ratios = {"Yellow Oxide": 1.0000, "Red Oxide": 0.1923, "Black": 0.1385};
+                    baseColor = "Yellow Oxide";
+                    ratios = {"Red Oxide": 0.1923, "Black": 0.1385};
                     break;
                 case "S07":
-                    ratios = {"White": 1.0000, "Blue": 0.0375, "Black": 0.0354};
+                    baseColor = "White";
+                    ratios = {"Blue": 0.0375, "Black": 0.0354};
                     break;
                 case "S08":
-                    ratios = {"New Green": 1.0000, "Yellow Oxide": 1.0000};
+                    baseColor = "New Green";
+                    ratios = {"Yellow Oxide": 1.0000};
                     break;
                 case "S09":
-                    ratios = {"White": 1.0000, "Black": 0.0500};
+                    baseColor = "White";
+                    ratios = {"Black": 0.0500};
                     break;
                 case "S10":
-                    ratios = {"White": 1.0000};
+                    baseColor = "White";
+                    ratios = {};
+                    break;
+                case "S11":
+                    baseColor = "Yellow";
+                    ratios = {};
+                    break;
+                case "S12":
+                    baseColor = "Yellow";
+                    ratios = {"New Red": 0.5000};
+                    break;
+                case "S13":
+                    baseColor = "White";
+                    ratios = {"Yellow Oxide": 0.2325, "Red Oxide": 0.0132};
+                    break;
+                case "S14":
+                    baseColor = "Yellow";
+                    ratios = {"Blue": 0.6271, "Black": 0.0429};
+                    break;
+                case "S15":
+                    baseColor = "New Red";
+                    ratios = {};
+                    break;
+                case "S16":
+                    baseColor = "Magenta";
+                    ratios = {"Blue": 0.8400, "New Red": 0.1333};
+                    break;
+                case "S17":
+                    baseColor = "Black";
+                    ratios = {};
+                    break;
+                case "S18":
+                    baseColor = "Red Oxide";
+                    ratios = {"Black": 0.6844, "Yellow Oxide": 0.3800};
+                    break;
+                case "S19":
+                    baseColor = "Blue";
+                    ratios = {};
+                    break;
+                case "S20":
+                    baseColor = "Red Oxide";
+                    ratios = {};
+                    break;
+                case "S21":
+                    baseColor = "Yellow Oxide";
+                    ratios = {};
+                    break;
+                case "S22":
+                    baseColor = "Magenta";
+                    ratios = {};
                     break;
                 default:
                     alert("Unknown formula selected.");
                     return;
             }
 
-            let resultText = `<strong>For ${baseWeight}g of the primary base color:</strong><br>`;
+            let resultText = `<strong>For ${baseWeight}g of ${baseColor}:</strong><br>`;
+            resultText += `${baseColor}: ${baseWeight.toFixed(1)}g<br>`;
             for (const color in ratios) {
                 const amount = (baseWeight * ratios[color]).toFixed(1); // Limiting to 1 decimal place
                 resultText += `${color}: ${amount}g<br>`;
@@ -115,6 +175,18 @@
         <option value="S08">S-08 Mint Green</option>
         <option value="S09">S-09 Gray</option>
         <option value="S10">S-10 White</option>
+        <option value="S11">S-11 Yellow</option>
+        <option value="S12">S-12 Orange</option>
+        <option value="S13">S-13 Flesh</option>
+        <option value="S14">S-14 Green</option>
+        <option value="S15">S-15 Red</option>
+        <option value="S16">S-16 Purple</option>
+        <option value="S17">S-17 Black</option>
+        <option value="S18">S-18 Brown</option>
+        <option value="S19">S-19 Blue</option>
+        <option value="S20">S-20 Red Brown</option>
+        <option value="S21">S-21 Mustard</option>
+        <option value="S22">S-22 Magenta</option>
     </select>
 
     <label for="base-weight">Enter Primary Base Color Weight (g):</label>
