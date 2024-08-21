@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protected Paint Ratio Calculator</title>
+    <title>Fashenhues Formulas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,11 +56,12 @@
 </head>
 <body>
     <div class="calculator">
-        <h1>Paint Ratio Calculator 1.5</h1>
+        <h1>Fashenhues Formulas 1.0</h1>
 
         <label for="product-line">Select Product Line:</label>
         <select id="product-line" onchange="updateColors()">
             <option value="" disabled selected>Select a product line</option>
+            <option value="Translucent Stains">Translucent Stains</option>
             <option value="14K Metallics">14K Metallics</option>
             <option value="Sterling Metallics">Sterling Metallics</option>
             <option value="Luminescents">Luminescents</option>
@@ -89,25 +90,111 @@
 
     <script>
         const formulas = {
+            "Translucent Stains": {
+                "S-01 Indian Flesh": {"Red Oxide": 1.0, "Black": 0.3858, "Yellow Oxide": 0.2142},
+                "S-02 Mocha": {"White": 1.0, "Red Oxide": 0.0484, "Black": 0.0494, "Yellow Oxide": 0.0184},
+                "S-03 Cabbage Green": {"White": 1.0, "Black": 0.8333, "Yellow Oxide": 0.6666, "New Green": 0.2},
+                "S-04 Jade": {"New Green": 1.0},
+                "S-05 Blue Violet": {"Blue": 1.0, "Magenta": 0.3555, "New Red": 0.0473},
+                "S-06 Caramel": {"Yellow Oxide": 1.0, "Red Oxide": 0.1923, "Black": 0.1385},
+                "S-07 Blue Gray": {"White": 1.0, "Blue": 0.0375, "Black": 0.0354},
+                "S-08 Mint Green": {"New Green": 1.0, "Yellow Oxide": 1.0},
+                "S-09 Gray": {"White": 1.0, "Black": 0.05},
+                "S-10 White": {"White": 1.0},
+                "S-11 Yellow": {"Yellow": 1.0},
+                "S-12 Orange": {"Yellow": 1.0, "New Red": 0.5},
+                "S-13 Flesh": {"White": 1.0, "Yellow Oxide": 0.2325, "Red Oxide": 0.0132},
+                "S-14 Green": {"Yellow": 1.0, "Blue": 0.6271, "Black": 0.0429},
+                "S-15 Red": {"New Red": 1.0},
+                "S-16 Purple": {"Magenta": 1.0, "Blue": 0.84, "New Red": 0.1333},
+                "S-17 Black": {"Black": 1.0},
+                "S-18 Brown": {"Red Oxide": 1.0, "Black": 0.6844, "Yellow Oxide": 0.38},
+                "S-19 Blue": {"Blue": 1.0},
+                "S-20 Red Brown": {"Red Oxide": 1.0},
+                "S-21 Mustard": {"Yellow Oxide": 1.0},
+                "S-22 Magenta": {"Magenta": 1.0},
+                "S-23 Mediterranean": {"Raw Umber (CCA)": 1.0},
+                "S-24 Maroon": {"New Red": 1.0, "Black": 0.0316},
+                "S-25 Periwinkle": {"White": 1.0, "Blue": 0.625, "Magenta": 0.625, "Raw Umber (CCA)": 0.2083},
+                "S-26 Lime": {"Yellow": 1.0, "New Green": 0.0454},
+                "S-27 Turquoise": {"White": 1.0, "Blue": 0.3226, "New Green": 0.2581, "Yellow": 0.0323},
+                "S-28 Black Brown": {"Black": 1.0, "Red Oxide": 0.5825, "Yellow Oxide": 0.2214},
+                "S-29 Pumpkin": {"Yellow": 1.0, "Red Oxide": 0.1337},
+                "S-30 Burgundy": {"Magenta": 1.0, "Red Oxide": 0.2139, "Black": 0.1464, "Yellow Oxide": 0.0813},
+                "S-31 Fuchsia": {"Magenta": 1.0, "Blue": 0.1475, "New Red": 0.0234},
+                "S-32 Royal Purple": {"Magenta": 1.0, "Blue": 0.84, "Black": 0.4055, "New Red": 0.1333},
+                "S-33 Charcoal": {"White": 1.0, "Black": 0.39},
+                "S-34 Teal": {"New Green": 1.0, "Blue": 0.63},
+                "S-35 Cocoa": {"White": 1.0, "Red Oxide": 0.1938, "Black": 0.1326, "Yellow Oxide": 0.0736},
+                "S-36 Navy": {"Blue": 1.0, "Black": 0.25},
+                "S-37 Hunter Green": {"Yellow": 1.0, "Blue": 0.6, "Black": 0.22},
+                "S-38 Rose": {"White": 1.0, "Magenta": 0.3738, "Red Oxide": 0.0654},
+                "S-39 Golden Yellow": {"Yellow": 1.0, "Yellow Oxide": 1.0},
+                "S-40 Sage": {"Yellow": 1.0, "Black": 0.2},
+                "S-41 Sunset": {"White": 1.0, "Red Oxide": 0.3, "Yellow Oxide": 0.2519},
+                "S-42 Morning Glory": {"White": 1.0, "Blue": 0.0352, "Magenta": 0.0017, "New Red": 0.0002},
+                "S-43 Canary Yellow": {"White": 1.0, "Yellow": 0.5},
+                "S-44 Denim": {"White": 1.0, "Blue": 0.1666, "Black": 0.1666},
+                "S-45 Harvest Moon": {"Orange": 1.0, "New Red": 0.1167, "Red Oxide": 0.0583, "Yellow Oxide": 0.0417},
+                "S-46 Violet Mist": {"White": 1.0, "Magenta": 0.0084, "Blue": 0.007, "New Red": 0.0011},
+                "S-47 Black Currant": {"New Red": 1.0, "Magenta": 1.0, "Black": 0.3125},
+                "S-48 Cayenne Pepper": {"New Red": 1.0, "Magenta": 1.0, "Black": 0.0220}
+            },
             "14K Metallics": {
-                "K-01 14K Gold": {"ME200 Pale Gold": 1, "ME150 Silver": 0},
-                "K-02 Emerald": {"ME200 Pale Gold": 1, "New Green BAC": 0.0496},
-                // Add all 14K Metallics formulas here
+                "K-01 14K Gold": {"ME200 Pale Gold": 1.0},
+                "K-02 Emerald": {"ME200 Pale Gold": 1.0, "New Green BAC": 0.0496},
+                "K-03 Ruby": {"ME200 Pale Gold": 1.0, "New Red BAC": 0.3208},
+                "K-04 Amethyst": {"ME200 Pale Gold": 1.0, "S-16 Purple": 0.0441, "Magenta BAC": 0.022},
+                "K-05 Copper": {"ME195 Copper": 1.0, "Magenta BAC": 0.0496},
+                "K-06 Brass": {"ME289 Brass": 1.0},
+                "K-07 Sapphire": {"ME200 Pale Gold": 1.0, "Blue BAC": 0.1874},
+                "K-08 Midnight Quartz": {"ME792 Black Sapphire": 1.0, "ME200 Pale Gold": 0.1666},
+                "K-09 Pink Ice": {"ME200 Pale Gold": 1.0, "Magenta BAC": 0.0496},
+                "K-10 Slate": {"ME244 Steel Gray": 1.0, "ME200 Pale Gold": 0.1666},
+                "K-11 Aquamarine": {"ME200 Pale Gold": 1.0, "New Green BAC": 0.0165},
+                "K-12 White Gold": {"ME707 Snowflake": 1.0, "ME200 Pale Gold": 0.1666}
             },
             "Sterling Metallics": {
-                "H-01 Sterling Silver": {"ME150 Silver": 1},
-                "H-02 Blueberry Ice": {"ME150 Silver": 1, "Blue BAC": 0.0441},
-                // Add all Sterling Metallics formulas here
+                "H-01 Sterling Silver": {"ME150 Silver": 1.0},
+                "H-02 Blueberry Ice": {"ME150 Silver": 1.0, "Blue BAC": 0.0441},
+                "H-03 Sassy Rose": {"ME150 Silver": 1.0, "New Red BAC": 0.3749},
+                "H-04 Grape": {"ME150 Silver": 1.0, "S-16 Purple": 0.1488},
+                "H-05 Raspberry": {"ME150 Silver": 1.0, "Magenta BAC": 0.0496},
+                "H-06 Coconut": {"ME150 Silver": 1.0, "S-18 Brown": 0.0331},
+                "H-07 Papaya": {"ME150 Silver": 1.0, "Red Oxide BAC": 0.1654},
+                "H-08 Tropicale": {"ME150 Silver": 1.0, "New Green BAC": 0.0606},
+                "H-09 Pewter": {"ME150 Silver": 1.0, "Black BAC": 0.0827},
+                "H-10 Honeydew": {"ME150 Silver": 1.0, "Hunter Green": 0.0243},
+                "H-11 Persimmon": {"ME150 Silver": 1.0, "Burnt Orange": 1.0},
+                "H-12 Pear": {"ME150 Silver": 1.0, "Yellow BAC": 0.1}
             },
             "Luminescents": {
-                "L-01 Poinsettia Red": {"ME513 Sashay Red": 1},
-                "L-02 Holly Green": {"ME706 Green Apple": 2, "ME796 Emerald": 1},
-                // Add all Luminescents formulas here
+                "L-01 Poinsettia Red": {"ME513 Sashay Red": 1.0},
+                "L-02 Holly Green": {"ME706 Green Apple": 2.0, "ME796 Emerald": 1.0},
+                "L-03 Cobalt Blue": {"ME429 Venetian Blue": 1.0},
+                "L-04 African Violet": {"ME427 Lilac": 1.0},
+                "L-05 Blue Orchid": {"ME791 Sky Blue": 1.0},
+                "L-06 Candied Apple": {"ME795 Ruby": 1.0},
+                "L-07 Marshmallow": {"ME707 Snowflake": 1.0},
+                "L-08 Burnt Orange": {"ME702 Burnt Orange": 1.0},
+                "L-09 Limeade": {"ME706 Green Apple": 1.0},
+                "L-10 Black Cherry": {"ME704 Black Cherry": 1.0},
+                "L-11 Bubblegum": {"ME797 Pink Topaz": 1.0},
+                "L-12 Indigo": {"ME798 Amethyst": 1.0}
             },
             "Pearlescents": {
-                "P-01 White Pearl": {"ME196 Pearl White": 1},
-                "P-02 Gold Pearl": {"ME164 Flash Gold": 1},
-                // Add all Pearlescents formulas here
+                "P-01 White Pearl": {"ME196 Pearl White": 1.0},
+                "P-02 Gold Pearl": {"ME164 Flash Gold": 1.0},
+                "P-03 Chocolate Pearl": {"ME196 Pearl White": 1.0, "S-18 Brown": 0.3125},
+                "P-04 Sunshine Pearl": {"ME196 Pearl White": 1.0, "ME164 Flash Gold": 1.0, "Yellow BAC": 0.3125},
+                "P-05 Black Pearl": {"ME700 Black Pearl": 1.0},
+                "P-06 Peach Pearl": {"ME196 Pearl White": 1.0, "Burnt Orange": 0.0833},
+                "P-07 Glacier Pearl": {"ME196 Pearl White": 1.0, "Sky Blue": 0.0833},
+                "P-08 Opal Pearl": {"ME657 Flash Blue": 1.0},
+                "P-09 Honey Pearl": {"ME656 Flash Copper": 1.0},
+                "P-10 Lavender Pearl": {"ME196 Pearl White": 1.0, "ME427 Lilac": 0.0833},
+                "P-11 Blush Pearl": {"ME196 Pearl White": 1.0, "ME795 Ruby": 0.0833},
+                "P-12 Pistachio Pearl": {"ME196 Pearl White": 1.0, "ME706 Green Apple": 0.0833}
             }
         };
 
