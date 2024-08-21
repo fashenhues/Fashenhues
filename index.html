@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Ratio Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #007bff;
+        }
+        label, input, button {
+            display: block;
+            margin: 10px 0;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e7f3ff;
+            border-left: 5px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Paint Ratio Calculator</h1>
+
+    <label for="base-weight">Enter Primary Base Color Weight (g):</label>
+    <input type="number" id="base-weight" placeholder="e.g., 100" required>
+
+    <label for="formula">Select Formula:</label>
+    <select id="formula">
+        <option value="S01">S-01 Indian Flesh</option>
+        <!-- Add more formulas here if needed -->
+    </select>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result">
+        <!-- Calculated weights will be displayed here -->
+    </div>
+
+    <script>
+        function calculate() {
+            const baseWeight = parseFloat(document.getElementById('base-weight').value);
+            const formula = document.getElementById('formula').value;
+
+            if (isNaN(baseWeight) || baseWeight <= 0) {
+                alert("Please enter a valid weight.");
+                return;
+            }
+
+            let ratios;
+            if (formula === "S01") {
+                // Ratios for S-01 Indian Flesh
+                ratios = {
+                    "Black": 0.3858,
+                    "Yellow Oxide": 0.2142
+                };
+            }
+            // Add more formulas and their ratios here if needed
+
+            let resultText = `<strong>For ${baseWeight}g of the primary base color:</strong><br>`;
+            for (const color in ratios) {
+                const amount = (baseWeight * ratios[color]).toFixed(2);
+                resultText += `${color}: ${amount}g<br>`;
+            }
+
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+
+</body>
+</html>
