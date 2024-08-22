@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fashenhues Formulas v1.5</title>
+    <title>Fashenhues Formulas v1.6</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -81,6 +81,7 @@
         }
         .required-colors {
             color: #00509e;
+            white-space: pre-line;
         }
         .hidden {
             display: none;
@@ -89,7 +90,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Fashenhues Formulas v1.5</h1>
+        <h1>Fashenhues Formulas v1.6</h1>
 
         <div class="form-group">
             <label for="product-line">Select Product Line:</label>
@@ -179,7 +180,7 @@
                 "K-02 Emerald": {"ME200 Pale Gold": 1.0, "New Green BAC": 0.0496},
                 "K-03 Ruby": {"ME200 Pale Gold": 1.0, "New Red BAC": 0.3208},
                 "K-04 Amethyst": {"ME200 Pale Gold": 1.0, "S-16 Purple": 0.0441, "Magenta BAC": 0.022},
-                "K-05 Copper": {"ME195 Copper": 1.0, "Magenta BAC": 0.0496},
+                "K-05 Copper": {"ME195 Copper": 1.0},
                 "K-06 Brass": {"ME289 Brass": 1.0},
                 "K-07 Sapphire": {"ME200 Pale Gold": 1.0, "Blue BAC": 0.1874},
                 "K-08 Midnight Quartz": {"ME792 Black Sapphire": 1.0, "ME200 Pale Gold": 0.1666},
@@ -199,7 +200,7 @@
                 "H-08 Tropicale": {"ME150 Silver": 1.0, "New Green BAC": 0.0606},
                 "H-09 Pewter": {"ME150 Silver": 1.0, "Black BAC": 0.0827},
                 "H-10 Honeydew": {"ME150 Silver": 1.0, "Hunter Green": 0.0243},
-                "H-11 Persimmon": {"ME150 Silver": 1.0, "Burnt Orange": 1.0},
+                "H-11 Persimmon": {"ME150 Silver": 1.0, "ME702 Burnt Orange": 1.0},
                 "H-12 Pear": {"ME150 Silver": 1.0, "Yellow BAC": 0.1}
             },
             "Luminescents": {
@@ -222,8 +223,8 @@
                 "P-03 Chocolate Pearl": {"ME196 Pearl White": 1.0, "S-18 Brown": 0.3125},
                 "P-04 Sunshine Pearl": {"ME196 Pearl White": 1.0, "ME164 Flash Gold": 1.0, "Yellow BAC": 0.3125},
                 "P-05 Black Pearl": {"ME700 Black Pearl": 1.0},
-                "P-06 Peach Pearl": {"ME196 Pearl White": 1.0, "Burnt Orange": 0.0833},
-                "P-07 Glacier Pearl": {"ME196 Pearl White": 1.0, "Sky Blue": 0.0833},
+                "P-06 Peach Pearl": {"ME196 Pearl White": 1.0, "ME702 Burnt Orange": 0.0833},
+                "P-07 Glacier Pearl": {"ME196 Pearl White": 1.0, "ME791 Sky Blue": 0.0833},
                 "P-08 Opal Pearl": {"ME657 Flash Blue": 1.0},
                 "P-09 Honey Pearl": {"ME656 Flash Copper": 1.0},
                 "P-10 Lavender Pearl": {"ME196 Pearl White": 1.0, "ME427 Lilac": 0.0833},
@@ -257,14 +258,20 @@
             if (productLine && formula && formulas[productLine] && formulas[productLine][formula]) {
                 requiredColors = Object.keys(formulas[productLine][formula]);
                 const baseColor = requiredColors[0];
-                
-                document.getElementById('base-weight-label').textContent = `Enter ${baseColor} Weight (g):`;
-                document.getElementById('base-weight-group').classList.remove('hidden');
-                document.getElementById('calculate-button').classList.remove('hidden');
-            }
 
-            document.getElementById('required-colors').innerHTML =
-                `<strong>Required Colors for ${formula}:</strong> ${requiredColors.join(', ')}`;
+                if (requiredColors.length === 1) {
+                    document.getElementById('required-colors').innerHTML = 
+                        `<strong>${formula} is a direct pour of ${baseColor}.</strong>`;
+                    document.getElementById('base-weight-group').classList.add('hidden');
+                    document.getElementById('calculate-button').classList.add('hidden');
+                } else {
+                    document.getElementById('required-colors').innerHTML =
+                        `<strong>Required Colors for ${formula}:</strong><br>${requiredColors.join('<br>')}`;
+                    document.getElementById('base-weight-label').textContent = `Enter ${baseColor} Weight (g):`;
+                    document.getElementById('base-weight-group').classList.remove('hidden');
+                    document.getElementById('calculate-button').classList.remove('hidden');
+                }
+            }
         }
 
         function calculate() {
