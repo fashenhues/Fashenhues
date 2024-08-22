@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fashenhues Formulas v1.11</title>
+    <title>Fashenhues Formulas v1.12</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
-            padding: 20px 0; /* Add padding to the top for some space */
+            padding: 20px 0;
             display: flex;
             justify-content: center;
-             align-items: flex-start; /* Align content to the top */
+            align-items: flex-start;
             background: linear-gradient(135deg, #f0f4ff, #d9e4ff);
             color: #333;
         }
@@ -99,7 +99,7 @@
             <img src="https://fashenhues.com/cdn/shop/files/fashenhues-header_logo_91612e0d-080c-4186-9629-2a6c62f04456.png" alt="Fashenhues Logo">
         </div>
 
-        <h1>Formulas v1.11</h1>
+        <h1>Formulas v1.12</h1>
 
         <div class="form-group">
             <label for="product-line">Select Product Line:</label>
@@ -130,6 +130,8 @@
         <button class="hidden" id="calculate-button" onclick="calculate()">Calculate</button>
 
         <div class="result hidden" id="result"></div>
+
+        <button id="clear-button" onclick="clearForm()">Clear</button>
     </div>
 
     <script>
@@ -320,6 +322,19 @@
 
             document.getElementById('result').innerHTML = resultText;
             document.getElementById('result').classList.remove('hidden'); // Show the result when calculated
+        }
+
+        function clearForm() {
+            // Reset the form selections and clear all displayed results
+            document.getElementById('product-line').selectedIndex = 0;
+            document.getElementById('formula').innerHTML = '<option value="" disabled selected>Select a color</option>';
+            document.getElementById('required-colors').innerHTML = '';
+            document.getElementById('required-colors').classList.add('hidden');
+            document.getElementById('base-weight').value = '';
+            document.getElementById('base-weight-group').classList.add('hidden');
+            document.getElementById('calculate-button').classList.add('hidden');
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('result').classList.add('hidden');
         }
 
         // Ensure the select fields reset to the default disabled selection on page refresh
