@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fashenhues Formulas v1.12</title>
+    <title>Fashenhues Formulas v1.13</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
-            padding: 20px 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -17,7 +17,7 @@
             color: #333;
         }
         .container {
-            max-width: 420px;
+            max-width: 100%;
             width: 100%;
             padding: 20px;
             background-color: white;
@@ -32,12 +32,12 @@
             margin-bottom: 20px;
         }
         h1 {
-            font-size: 1.6em;
+            font-size: 1.6rem;
             color: #007bff;
             margin-bottom: 10px;
         }
         .form-group {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             position: relative;
             text-align: left;
         }
@@ -49,7 +49,7 @@
         }
         input, select, button {
             width: 100%;
-            padding: 8px 12px;
+            padding: 12px 15px;
             font-size: 1em;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -76,7 +76,7 @@
         }
         .result, .required-colors {
             margin-top: 10px;
-            padding: 10px;
+            padding: 12px;
             background-color: #e7f3ff;
             border-left: 4px solid #007bff;
             border-radius: 4px;
@@ -91,6 +91,22 @@
         .hidden {
             display: none;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.4rem; /* Slightly smaller font size on mobile */
+            }
+            
+            .container {
+                padding: 15px; /* Reduce padding for smaller screens */
+            }
+
+            button {
+                font-size: 0.9rem; /* Slightly smaller button text on mobile */
+                padding: 10px 12px; /* Adjust padding for smaller screens */
+            }
+        }
     </style>
 </head>
 <body>
@@ -99,7 +115,7 @@
             <img src="https://fashenhues.com/cdn/shop/files/fashenhues-header_logo_91612e0d-080c-4186-9629-2a6c62f04456.png" alt="Fashenhues Logo">
         </div>
 
-        <h1>Formulas v1.12</h1>
+        <h1>Formulas v1.13</h1>
 
         <div class="form-group">
             <label for="product-line">Select Product Line:</label>
@@ -131,7 +147,7 @@
 
         <div class="result hidden" id="result"></div>
 
-        <button id="clear-button" onclick="clearForm()">Clear</button>
+        <button class="hidden" id="clear-button" onclick="clearForm()">Clear</button>
     </div>
 
     <script>
@@ -257,6 +273,7 @@
             document.getElementById('base-weight').value = ''; // Clear the weight input field
             document.getElementById('base-weight-group').classList.add('hidden');
             document.getElementById('calculate-button').classList.add('hidden');
+            document.getElementById('clear-button').classList.remove('hidden'); // Show the Clear button
 
             if (productLine && formulas[productLine]) {
                 for (const color in formulas[productLine]) {
@@ -335,6 +352,7 @@
             document.getElementById('calculate-button').classList.add('hidden');
             document.getElementById('result').innerHTML = '';
             document.getElementById('result').classList.add('hidden');
+            document.getElementById('clear-button').classList.add('hidden'); // Hide the Clear button
         }
 
         // Ensure the select fields reset to the default disabled selection on page refresh
