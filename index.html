@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fashenhues Formulas v1.6</title>
+    <title>Fashenhues Formulas v1.7</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -90,7 +90,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Fashenhues Formulas v1.6</h1>
+        <h1>Fashenhues Formulas v1.7</h1>
 
         <div class="form-group">
             <label for="product-line">Select Product Line:</label>
@@ -237,8 +237,12 @@
             const productLine = document.getElementById('product-line').value;
             const formulaSelect = document.getElementById('formula');
 
-            // Clear previous options
+            // Clear previous options and result
             formulaSelect.innerHTML = '<option value="" disabled selected>Select a color</option>';
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('required-colors').innerHTML = '';
+            document.getElementById('base-weight-group').classList.add('hidden');
+            document.getElementById('calculate-button').classList.add('hidden');
 
             if (productLine && formulas[productLine]) {
                 for (const color in formulas[productLine]) {
@@ -271,6 +275,8 @@
                     document.getElementById('base-weight-group').classList.remove('hidden');
                     document.getElementById('calculate-button').classList.remove('hidden');
                 }
+
+                document.getElementById('result').innerHTML = ''; // Clear the result
             }
         }
 
@@ -284,7 +290,10 @@
                 return;
             }
 
-            let resultText = `<strong>For ${baseWeight}g of ${formula}:</strong><br>`;
+            const requiredColors = Object.keys(formulas[productLine][formula]);
+            const baseColor = requiredColors[0];
+
+            let resultText = `<strong>For ${baseWeight}g of ${baseColor}:</strong><br>`;
             const ratios = formulas[productLine][formula];
             for (const color in ratios) {
                 const amount = (baseWeight * ratios[color]).toFixed(1);
